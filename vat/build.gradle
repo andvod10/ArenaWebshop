@@ -16,6 +16,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.eclipse.persistence:javax.persistence:2.2.1'
+    runtimeOnly("org.postgresql:postgresql")
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation ('org.springframework.boot:spring-boot-starter-test') {
@@ -24,6 +25,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.4.2'
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation 'org.mockito:mockito-junit-jupiter'
     testRuntimeOnly("com.h2database:h2")
 }
 

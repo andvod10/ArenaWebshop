@@ -23,7 +23,7 @@ public class VatServiceImpl implements VatService {
 
     @Override
     public Vat getVat(String code, String type) {
-        return this.vatRepository.findByCodeAndType(code, type)
+        return this.vatRepository.findByCodeAndTypeIgnoreCase(code, type)
                 .orElseThrow(() -> new IllegalArgumentException(String.format("Couldn't find Vat by code %s", type)));
     }
 }

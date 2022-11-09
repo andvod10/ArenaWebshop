@@ -23,7 +23,7 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     @Override
     public Currency getCurrency(String code) {
-        return this.currencyRepository.findByCode(code)
+        return this.currencyRepository.findByCodeIgnoreCase(code)
                 .orElseThrow(() -> new IllegalArgumentException(String.format("Couldn't find Currency by code %s", code)));
     }
 }

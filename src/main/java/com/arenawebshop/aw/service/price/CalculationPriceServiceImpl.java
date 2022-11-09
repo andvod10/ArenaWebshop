@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
+
 @Service
 public class CalculationPriceServiceImpl implements CalculationPriceService {
     // It's better to hold these values in DB, for more then one freighter. And it will be easier to modify
@@ -36,14 +39,27 @@ public class CalculationPriceServiceImpl implements CalculationPriceService {
         double totalPrice = rqTotalPrice.price * rqTotalPrice.amount;
         totalPrice += calculateFreight(rqTotalPrice.amount);
         double vatRate = this.calculationVatService.calculateVat(rqTotalPrice.vat, rqTotalPrice.type.name());
+        String inputCurrency = rqTotalPrice.inputCurrency != null ? rqTotalPrice.inputCurrency.name() : Currency.DKK.name();
+        String outputCurrency = rqTotalPrice.outputCurrency != null ? rqTotalPrice.outputCurrency.name() : Currency.DKK.name();
         double exchangedMoney = this.calculationVatService.calculateCurrencyExchange(
-                rqTotalPrice.inputCurrency,
-                rqTotalPrice.outputCurrency,
+                inputCurrency,
+                outputCurrency,
                 totalPrice);
         return RsTotalPrice.builder()
-                .totalPrice(exchangedMoney * vatRate / 100)
-                .currency(Currency.valueOf(rqTotalPrice.outputCurrency))
+                .totalPrice(round(exchangedMoney + exchangedMoney * vatRate / 100))
+                .currency(Currency.valueOf(outputCurrency))
                 .build();
+    }
+
+    private Double round(double value) {
+        DecimalFormat df = new DecimalFormat("0.00");
+        String format = df.format(value);
+        try {
+            return (Double) df.parse(format);
+        } catch (ParseException ex) {
+            throw new IllegalArgumentException(String
+                    .format("Value %f couldn't be rounded", value));
+        }
     }
 
     /**

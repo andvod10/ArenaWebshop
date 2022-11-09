@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface CurrencyRepository extends CrudRepository<Currency, String> {
-    public Optional<Currency> findByCode(String code);
+    public Optional<Currency> findByCodeIgnoreCase(String code);
 }

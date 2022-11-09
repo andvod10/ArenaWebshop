@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface VatRepository extends CrudRepository<Vat, String> {
-    public Optional<Vat> findByCodeAndType(String code, String type);
+    public Optional<Vat> findByCodeAndTypeIgnoreCase(String code, String type);
 }

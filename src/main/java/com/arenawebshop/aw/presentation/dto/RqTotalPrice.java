@@ -1,6 +1,8 @@
 package com.arenawebshop.aw.presentation.dto;
 
+import com.arenawebshop.aw.data.entity.Currency;
 import com.arenawebshop.aw.data.entity.ProductType;
+import com.arenawebshop.aw.data.mapper.CurrencyConverter;
 import com.arenawebshop.aw.data.mapper.ProductTypeConverter;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.validators.PositiveInteger;
@@ -32,8 +34,10 @@ public class RqTotalPrice {
     public ProductType type = ProductType.BOOK;
 
     @Parameter(names = {"--input-currency"},
+            converter = CurrencyConverter.class,
             description = "Input currency")
-    public String inputCurrency;
+    @Builder.Default
+    public Currency inputCurrency = Currency.DKK;
 
     @Parameter(names = {"--vat"},
             description = "VAT",
@@ -41,6 +45,8 @@ public class RqTotalPrice {
     public String vat;
 
     @Parameter(names = {"--output-currency"},
+            converter = CurrencyConverter.class,
             description = "Output currency")
-    public String outputCurrency;
+    @Builder.Default
+    public Currency outputCurrency = Currency.DKK;
 }
