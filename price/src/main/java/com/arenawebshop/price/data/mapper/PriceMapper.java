@@ -8,6 +8,7 @@ public class PriceMapper {
         RqPrice rqPrice = new RqPrice();
         JCommander.newBuilder()
                 .addObject(rqPrice)
+                .acceptUnknownOptions(true)
                 .build()
                 .parse(args);
         return rqPrice;

@@ -22,20 +22,4 @@ public class RqPrice {
             description = "Is the product cost",
             required = true)
     public Double price;
-
-    @Parameter(names = {"--input-currency"},
-            description = "Input currency")
-    public String inputCurrency;
-
-    @Parameter(names = {"--vat"},
-            description = "VAT")
-    public String vat;
-
-    @Parameter(names = {"--output-currency"},
-            description = "Output currency")
-    public String outputCurrency ;
-
-    @Parameter(names = {"-t", "--type"},
-            description = "Is a product identifier")
-    public String type;
 }

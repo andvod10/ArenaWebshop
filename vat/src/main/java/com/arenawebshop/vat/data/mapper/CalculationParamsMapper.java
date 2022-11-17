@@ -8,6 +8,7 @@ public class CalculationParamsMapper {
         RqCalculationParams rqCalculationParams = new RqCalculationParams();
         JCommander.newBuilder()
                 .addObject(rqCalculationParams)
+                .acceptUnknownOptions(true)
                 .build()
                 .parse(args);
         return rqCalculationParams;

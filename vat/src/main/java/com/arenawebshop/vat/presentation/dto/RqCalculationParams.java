@@ -16,16 +16,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RqCalculationParams {
-    @Parameter(names = {"-a", "--amount"},
-            validateWith = PositiveInteger.class,
-            description = "Is the amount of one product")
-    @Builder.Default
-    public Integer amount = 1;
-
-    @Parameter(names = {"-p", "--price"},
-            description = "Is the product cost")
-    public Double price;
-
     @Parameter(names = {"--input-currency"},
             description = "Input currency",
             converter = CurrencyConverter.class)
