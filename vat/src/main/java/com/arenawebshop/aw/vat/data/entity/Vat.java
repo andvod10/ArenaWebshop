@@ -23,7 +23,7 @@ public class Vat extends BaseEntity {
     @Column(name = "rate")
     Double rate;
     @Column(name = "type")
-    String type;
+    ProductType type;
     @Column(name = "area")
     String area;
 }

@@ -1,30 +1,24 @@
 package com.arenawebshop.aw.presentation.handler;
 
-import com.arenawebshop.aw.presentation.dto.RqTotalPrice;
 import com.arenawebshop.aw.service.price.CalculationPriceService;
-import com.beust.jcommander.JCommander;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.arenawebshop.aw.vat.service.vat.CalculationAreaSpecificServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CalculatePriceController {
-    private static final Logger LOG = LoggerFactory.getLogger(CalculatePriceController.class);
     private CalculationPriceService calculationPriceService;
+    private CalculationAreaSpecificServiceImpl calculationAreaSpecificService;
 
     @Autowired
-    void CalculationPrice(CalculationPriceService calculationPriceService) {
+    CalculatePriceController(CalculationPriceService calculationPriceService,
+                             CalculationAreaSpecificServiceImpl calculationAreaSpecificService) {
         this.calculationPriceService = calculationPriceService;
+        this.calculationAreaSpecificService = calculationAreaSpecificService;
     }
 
     public String calculateTotalPrice(String... args) {
-        RqTotalPrice rqTotalPrice = new RqTotalPrice();
-        JCommander.newBuilder()
-                .addObject(rqTotalPrice)
-                .build()
-                .parse(args);
-        LOG.debug(rqTotalPrice.toString());
-        return this.calculationPriceService.calculateTotalPrice(rqTotalPrice).toString();
+        double price = this.calculationPriceService.calculateTotalPrice(args).getPrice();
+        return this.calculationAreaSpecificService.calculateVatAndCurrencyExchange(price, args).toString();
     }
 }

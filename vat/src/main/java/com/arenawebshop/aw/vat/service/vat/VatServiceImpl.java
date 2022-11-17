@@ -1,5 +1,6 @@
 package com.arenawebshop.aw.vat.service.vat;
 
+import com.arenawebshop.aw.vat.data.entity.ProductType;
 import com.arenawebshop.aw.vat.data.entity.Vat;
 import com.arenawebshop.aw.vat.data.repository.VatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,13 @@ public class VatServiceImpl implements VatService {
     }
 
     @Override
-    public Vat getVat(String code, String type) {
-        return this.vatRepository.findByCodeAndTypeIgnoreCase(code, type)
+    public Vat getVat(String code, ProductType type) {
+        return this.vatRepository.findByCodeAndType(code, type)
                 .orElseThrow(() -> new IllegalArgumentException(String.format("Couldn't find Vat by code %s", type)));
+    }
+
+    @Override
+    public Double calculateVat(String code, ProductType type) {
+        return this.getVat(code, type).getRate();
     }
 }

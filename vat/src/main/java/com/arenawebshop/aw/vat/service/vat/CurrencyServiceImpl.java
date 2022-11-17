@@ -1,29 +1,37 @@
 package com.arenawebshop.aw.vat.service.vat;
 
 import com.arenawebshop.aw.vat.data.entity.Currency;
-import com.arenawebshop.aw.vat.data.repository.CurrencyRepository;
+import com.arenawebshop.aw.vat.data.entity.CurrencyRate;
+import com.arenawebshop.aw.vat.data.repository.CurrencyRepositoryType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CurrencyServiceImpl implements CurrencyService {
-    private CurrencyRepository currencyRepository;
+    private CurrencyRepositoryType currencyRepositoryType;
 
     @Autowired
     CurrencyServiceImpl(
-            CurrencyRepository currencyRepository
+            CurrencyRepositoryType currencyRepositoryType
     ) {
-        this.currencyRepository = currencyRepository;
+        this.currencyRepositoryType = currencyRepositoryType;
     }
 
     @Override
-    public void addCurrency(Currency vat) {
-        this.currencyRepository.save(vat);
+    public void addCurrency(CurrencyRate vat) {
+        this.currencyRepositoryType.save(vat);
     }
 
     @Override
-    public Currency getCurrency(String code) {
-        return this.currencyRepository.findByCodeIgnoreCase(code)
+    public CurrencyRate getCurrency(Currency code) {
+        return this.currencyRepositoryType.findByCode(code)
                 .orElseThrow(() -> new IllegalArgumentException(String.format("Couldn't find Currency by code %s", code)));
+    }
+
+    @Override
+    public Double calculateCurrencyExchange(Currency inputCode, Currency outputCode, Double amount) {
+        Double inputRate = this.getCurrency(inputCode).getRate();
+        Double outputRate = this.getCurrency(outputCode).getRate();
+        return inputRate * amount / outputRate;
     }
 }

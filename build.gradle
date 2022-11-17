@@ -26,14 +26,13 @@ dependencies {
 	testRuntimeOnly("com.h2database:h2")
 
 	implementation project(':vat')
+	implementation project(':price')
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
 
-tasks {
-	bootJar {
-		archiveFileName.set("aw.jar")
-	}
+tasks.bootJar {
+	archiveFileName.set("aw.jar")
 }

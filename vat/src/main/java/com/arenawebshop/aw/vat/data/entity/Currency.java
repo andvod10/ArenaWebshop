@@ -1,25 +1,24 @@
 package com.arenawebshop.aw.vat.data.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+public enum Currency {
+    DKK,
+    NOK,
+    SEK,
+    GBP,
+    EUR;
 
-@Entity
-@Table(name = "currency")
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class Currency extends BaseEntity {
-    @Column(name = "code")
-    String code;
-    @Column(name = "rate")
-    Double rate;
+    public static Currency getCurrency(String currency) {
+        Optional<Currency> found = Arrays.stream(Currency.values())
+                .filter(type -> currency.equalsIgnoreCase(type.toString()))
+                .findFirst();
+        String enumValues = Arrays.stream(Currency.values())
+                .map(Enum::name)
+                .collect(Collectors.joining(", "));
+        return found.orElseThrow(() -> new IllegalArgumentException(String
+                .format("Value %s doesn't available for Currency. Choose one of %s", currency, enumValues)));
+    }
 }
