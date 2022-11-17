@@ -1,18 +1,18 @@
 package com.arenawebshop.aw.presentation.handler;
 
-import com.arenawebshop.aw.service.price.CalculationPriceService;
-import com.arenawebshop.aw.vat.service.vat.CalculationAreaSpecificServiceImpl;
+import com.arenawebshop.price.service.price.CalculationPriceService;
+import com.arenawebshop.vat.service.vat.CalculationAreaSpecificService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CalculatePriceController {
     private CalculationPriceService calculationPriceService;
-    private CalculationAreaSpecificServiceImpl calculationAreaSpecificService;
+    private CalculationAreaSpecificService calculationAreaSpecificService;
 
     @Autowired
     CalculatePriceController(CalculationPriceService calculationPriceService,
-                             CalculationAreaSpecificServiceImpl calculationAreaSpecificService) {
+                             CalculationAreaSpecificService calculationAreaSpecificService) {
         this.calculationPriceService = calculationPriceService;
         this.calculationAreaSpecificService = calculationAreaSpecificService;
     }
