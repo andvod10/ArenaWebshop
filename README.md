@@ -7,6 +7,6 @@ There are two separate parts:
  - Execute command line. All params should be provided with names for them
    1) If should be calculated only cost without exchanges currency, then use params:
     "java -jar aw.jar -p 15.4 -t book -a 4 --vat GB"
-      [-, --price] and [--vat] params are required
+      [-p, --price] and [--vat] params are required
    2) With currency exchange
     "java -jar aw.jar -p 15.4 -t book -a 4 --vat GB --input-currency SEK --output-currency "
